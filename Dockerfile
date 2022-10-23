@@ -13,14 +13,17 @@ FROM jlesage/baseimage-gui:alpine-3.16-v4.0.4
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG FIREFOX_VERSION=101.0.1-r0
+ARG FIREFOX_VERSION=106.0.1-r1
 
 # Define working directory.
 WORKDIR /tmp
 
 # Install Firefox.
 RUN \
-     add-pkg firefox=${FIREFOX_VERSION}
+    # Set the mirror address in China to accelerate the network of the Chinese server.
+    sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+    # Note: edge is a development branch and may be unstable
+    add-pkg firefox=${FIREFOX_VERSION} --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
 # Install extra packages.
 RUN \
@@ -44,11 +47,6 @@ RUN \
 RUN \
     sed-patch 's|LOG_FILES=|LOG_FILES=/config/log/firefox/error.log|' /etc/logmonitor/logmonitor.conf && \
     sed-patch 's|STATUS_FILES=|STATUS_FILES=/tmp/.firefox_shm_check,/tmp/.firefox_membarrier_check|' /etc/logmonitor/logmonitor.conf
-
-# Generate and install favicons.
-RUN \
-    APP_ICON_URL=https://github.com/jlesage/docker-templates/raw/master/jlesage/images/firefox-icon.png && \
-    install_app_icon.sh "$APP_ICON_URL"
 
 # Add files.
 COPY rootfs/ /
