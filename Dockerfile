@@ -34,14 +34,6 @@ RUN \
         # The following package is used to send key presses to the X process.
         xdotool
 
-# Set default settings.
-RUN \
-    CFG_FILE="$(ls /usr/lib/firefox/browser/defaults/preferences/firefox-branding.js)" && \
-    echo '' >> "$CFG_FILE" && \
-    echo '// Default download directory.' >> "$CFG_FILE" && \
-    echo 'pref("browser.download.dir", "/config/downloads");' >> "$CFG_FILE" && \
-    echo 'pref("browser.download.folderList", 2);' >> "$CFG_FILE"
-
 # Enable log monitoring.
 RUN \
     sed-patch 's|LOG_FILES=|LOG_FILES=/config/log/firefox/error.log|' /etc/logmonitor/logmonitor.conf && \

@@ -1,3 +1,7 @@
+// Default download directory
+user_pref("browser.download.dir", "/config/downloads");
+user_pref("browser.download.folderList", 2);
+
 // Disable the privacy notice page.
 user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
 
