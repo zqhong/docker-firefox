@@ -1,9 +1,3 @@
-#
-# firefox Dockerfile
-#
-# https://github.com/jlesage/docker-firefox
-#
-
 # Build the membarrier check tool.
 FROM alpine:3.14 AS membarrier
 WORKDIR /tmp
@@ -129,5 +123,5 @@ LABEL \
       org.label-schema.name="firefox" \
       org.label-schema.description="Docker container for Firefox" \
       org.label-schema.version="${DOCKER_IMAGE_VERSION:-unknown}" \
-      org.label-schema.vcs-url="https://github.com/jlesage/docker-firefox" \
+      org.label-schema.vcs-url="https://github.com/zqhong/docker-firefox" \
       org.label-schema.schema-version="1.0"
