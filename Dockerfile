@@ -21,7 +21,7 @@ WORKDIR /tmp
 # Install Firefox.
 RUN \
     # Note: edge is a development branch and may be unstable
-    add-pkg firefox=${FIREFOX_VERSION} --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+    apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community firefox=${FIREFOX_VERSION}
 
 # Install extra packages.
 RUN \
