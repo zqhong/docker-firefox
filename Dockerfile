@@ -20,10 +20,8 @@ WORKDIR /tmp
 
 # Install Firefox.
 RUN \
-    # Set the mirror address in China to accelerate the network of the Chinese server.
-    sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
     # Note: edge is a development branch and may be unstable
-    add-pkg firefox=${FIREFOX_VERSION} --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+    add-pkg firefox=${FIREFOX_VERSION} --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 
 # Install extra packages.
 RUN \
