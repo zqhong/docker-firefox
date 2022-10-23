@@ -5,8 +5,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DOCKER_IMAGE_NAME: zqhong/docker-firefox
-  PLATFORMS: linux/amd64,linux/386,linux/arm/v7,linux/arm64/v8
+  DOCKER_IMAGE_NAME: hd2300/docker-firefox
+  PLATFORMS: linux/amd64,linux/386
 
 on:
   workflow_dispatch:
