@@ -52,8 +52,6 @@ RUN \
 # Install Firefox.
 RUN \
 #    add-pkg --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-#            --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
-#            --upgrade firefox=${FIREFOX_VERSION}
      add-pkg firefox=${FIREFOX_VERSION}
 
 # Install extra packages.
@@ -73,24 +71,6 @@ RUN \
     echo '// Default download directory.' >> "$CFG_FILE" && \
     echo 'pref("browser.download.dir", "/config/downloads");' >> "$CFG_FILE" && \
     echo 'pref("browser.download.folderList", 2);' >> "$CFG_FILE"
-
-# Install profile-cleaner.
-#RUN \
-#    add-pkg --virtual build-dependencies curl && \
-#    curl -# -L -o /usr/bin/profile-cleaner {$PROFILE_CLEANER_URL} && \
-#    sed-patch 's/@VERSION@/'${PROFILE_CLEANER_VERSION}'/' /usr/bin/profile-cleaner && \
-#    chmod +x /usr/bin/profile-cleaner && \
-#    add-pkg \
-#        bash \
-#        file \
-#        coreutils \
-#        bc \
-#        parallel \
-#        sqlite \
-#        && \
-#    # Cleanup.
-#    del-pkg build-dependencies && \
-#    rm -rf /tmp/* /tmp/.[!.]*
 
 # Enable log monitoring.
 RUN \
