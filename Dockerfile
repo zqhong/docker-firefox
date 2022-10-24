@@ -1,16 +1,4 @@
-# Build the membarrier check tool.
-FROM alpine:3.14 AS membarrier
-WORKDIR /tmp
-COPY membarrier_check.c .
-RUN apk --no-cache add build-base linux-headers
-RUN gcc -static -o membarrier_check membarrier_check.c
-RUN strip membarrier_check
-
-# Pull base image.
-FROM jlesage/baseimage-gui:alpine-3.16-v4.0.4
-
-# Docker image version is provided via build arg.
-ARG DOCKER_IMAGE_VERSION=
+FROM alpine:3.16
 
 # Define software versions.
 ARG FIREFOX_VERSION=106.0.1-r1
@@ -18,47 +6,31 @@ ARG FIREFOX_VERSION=106.0.1-r1
 # Define working directory.
 WORKDIR /tmp
 
-# Install Firefox.
+# Install the base environment
 RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories &&  \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories &&  \
+    sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+    add-pkg xvfb && \
+    add-pkg x11vnc && \
+    add-pkg ttf-dejavu && \
+    add-pkg xdotool
+
+# Install Firefox.
+RUN \
     add-pkg firefox=${FIREFOX_VERSION}
 
-# Install extra packages.
-RUN \
-    add-pkg \
-        # Icons used by folder/file selection window (when saving as).
-        gnome-icon-theme \
-        # A font is needed.
-        ttf-dejavu \
-        # The following package is used to send key presses to the X process.
-        xdotool
-
-# Enable log monitoring.
-RUN \
-    sed-patch 's|LOG_FILES=|LOG_FILES=/config/log/firefox/error.log|' /etc/logmonitor/logmonitor.conf && \
-    sed-patch 's|STATUS_FILES=|STATUS_FILES=/tmp/.firefox_shm_check,/tmp/.firefox_membarrier_check|' /etc/logmonitor/logmonitor.conf
-
-# Add files.
-COPY rootfs/ /
-COPY --from=membarrier /tmp/membarrier_check /usr/bin/
-
-# Set internal environment variables.
-RUN \
-    set-cont-env APP_NAME "Firefox" && \
-    set-cont-env APP_VERSION "$FIREFOX_VERSION" && \
-    set-cont-env DOCKER_IMAGE_VERSION "$DOCKER_IMAGE_VERSION" && \
-    true
-
-# Set public environment variables.
+# Set environment variables.
 ENV \
-    FF_OPEN_URL= \
-    FF_KIOSK=0
+    DISPLAY_WIDTH=1920 \
+    DISPLAY_HEIGHT=1080 \
+    VNC_LISTENING_PORT=5900 \
+    VNC_PASSWORD=default_password_2cQ1q0YV
 
-# Metadata.
-LABEL \
-      org.label-schema.name="firefox" \
-      org.label-schema.description="Docker container for Firefox" \
-      org.label-schema.version="${DOCKER_IMAGE_VERSION:-unknown}" \
-      org.label-schema.vcs-url="https://github.com/zqhong/docker-firefox" \
-      org.label-schema.schema-version="1.0"
+COPY entrypoint.sh /
+
+# Expose ports.
+#   - 5900: VNC
+EXPOSE 5900
+
+ENTRYPOINT ["/entrypoint.sh"]
