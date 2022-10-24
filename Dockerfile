@@ -26,9 +26,6 @@ ENV \
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-# Add files.
-COPY rootfs/ /
-
 # Expose ports.
 #   - 5900: VNC
 EXPOSE 5900
