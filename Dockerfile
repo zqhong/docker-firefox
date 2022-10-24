@@ -11,14 +11,14 @@ RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories &&  \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories &&  \
     sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-    add-pkg xvfb && \
-    add-pkg x11vnc && \
-    add-pkg ttf-dejavu && \
-    add-pkg xdotool
+    apk add xvfb && \
+    apk add x11vnc && \
+    apk add ttf-dejavu && \
+    apk add xdotool
 
 # Install Firefox.
 RUN \
-    add-pkg firefox=${FIREFOX_VERSION}
+    apk add firefox=${FIREFOX_VERSION}
 
 # Set environment variables.
 ENV \
