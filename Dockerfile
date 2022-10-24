@@ -3,6 +3,11 @@ FROM alpine:3.16
 # Define working directory.
 WORKDIR /tmp
 
+# Creating a non-root user
+ARG USERNAME=app
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
 # Install the base environment
 RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories &&  \
@@ -10,7 +15,16 @@ RUN \
     apk add xvfb && \
     apk add x11vnc && \
     apk add ttf-dejavu && \
+    apk add sudo && \
     apk add xdotool
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+USER $USERNAME
 
 # Install chromium.
 RUN \
