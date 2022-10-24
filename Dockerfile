@@ -13,13 +13,6 @@ RUN \
     apk add sudo && \
     apk add xdotool
 
-# Creating a non-root user
-ARG USERNAME=app
-
-RUN adduser -D $USERNAME \
-        && echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USERNAME \
-        && chmod 0440 /etc/sudoers.d/$USERNAME
-
 # Install chromium.
 RUN \
     apk add chromium
@@ -38,7 +31,13 @@ RUN chmod +x /entrypoint.sh
 #   - 5900: VNC
 EXPOSE 5900
 
-# Note: Now a normal user named app is used to execute the following instructions
+# Creating a non-root user
+ARG USERNAME=app
+
+RUN adduser -D $USERNAME \
+        && echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USERNAME \
+        && chmod 0440 /etc/sudoers.d/$USERNAME
+
 USER $USERNAME
 
 ENTRYPOINT ["/entrypoint.sh"]
