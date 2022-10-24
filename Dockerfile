@@ -27,6 +27,7 @@ ENV \
     VNC_PASSWORD=default_password_2cQ1q0YV
 
 COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
 # Expose ports.
 #   - 5900: VNC
