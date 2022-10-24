@@ -11,7 +11,7 @@ xvfb-run --listen-tcp \
   /usr/bin/firefox --profile /config/profile --setDefaultBrowser &
 
 # xvfb-run startup takes some time, waiting for a while
-sleep 5s
+/bin/sleep 5s
 
 # run x11vnc
-x11vnc -display :76 -passwd "$VNC_PASSWORD" -forever -autoport "$VNC_LISTENING_PORT"
+/usr/bin/x11vnc -display :76 -passwd "$VNC_PASSWORD" -forever -autoport "$VNC_LISTENING_PORT"

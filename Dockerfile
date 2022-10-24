@@ -11,6 +11,7 @@ RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories &&  \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories &&  \
     apk add xvfb && \
+    apk add xvfb-run && \
     apk add x11vnc && \
     apk add ttf-dejavu && \
     apk add xdotool
