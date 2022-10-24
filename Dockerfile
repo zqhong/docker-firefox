@@ -20,8 +20,6 @@ RUN adduser -D $USERNAME \
         && echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USERNAME \
         && chmod 0440 /etc/sudoers.d/$USERNAME
 
-USER $USERNAME
-
 # Install chromium.
 RUN \
     apk add chromium
@@ -39,5 +37,8 @@ RUN chmod +x /entrypoint.sh
 # Expose ports.
 #   - 5900: VNC
 EXPOSE 5900
+
+# Note: Now a normal user named app is used to execute the following instructions
+USER $USERNAME
 
 ENTRYPOINT ["/entrypoint.sh"]
