@@ -24,7 +24,8 @@ ENV \
     DISPLAY_WIDTH=1920 \
     DISPLAY_HEIGHT=1080 \
     VNC_LISTENING_PORT=5900 \
-    VNC_PASSWORD=default_password_2cQ1q0YV
+    VNC_PASSWORD=default_password_2cQ1q0YV \
+    XAUTHORITY=/tmp/Xauthority
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh

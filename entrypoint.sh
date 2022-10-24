@@ -9,7 +9,6 @@ xvfb-run --listen-tcp \
   --server-arg="-screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x24" \
   --auth-file="$XAUTHORITY" \
   /usr/bin/firefox --profile /config/profile --setDefaultBrowser &
-/
 
 # xvfb-run startup takes some time, waiting for a while
 sleep 5s
