@@ -7,27 +7,22 @@ WORKDIR /tmp
 RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories &&  \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories &&  \
-    apk add xvfb && \
-    apk add x11vnc && \
+    apk add tigervnc && \
     apk add ttf-dejavu && \
-    apk add sudo && \
-    apk add xdotool
+    apk add xdotool && \
+    apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing &&\
+    apk add unzip
 
 # Install chromium
 RUN \
     apk add chromium
 
-# Install other options
-RUN \
-    # Solve garbled characters
-    apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing && \
-    # Used to unpack Chrome crx extension files
-    apk add unzip
-
 # Set environment variables.
 ENV \
+    APP_NAME="Docker Web Browser" \
     DISPLAY_WIDTH=1920 \
     DISPLAY_HEIGHT=1080 \
+    DISPLAY_DEPTH=24 \
     VNC_LISTENING_PORT=5900 \
     VNC_PASSWORD=default_password_2cQ1q0YV
 

@@ -3,33 +3,27 @@
 set -e # Exit immediately if a command exits with a non-zero status.
 set -u # Treat unset variables as an error.
 
+export DISPLAY=:1
+export VNC_PASSWORD_FILE="/config/.vncpass"
+
 # prepare for action
 if [ ! -d "/config/chrome" ]; then
   sudo mkdir -pv /config/chrome
   sudo chown -R app:app /config
 fi
 
-# fix: _XSERVTransmkdir: Owner of /tmp/.X11-unix should be set to root
-if [ -d "/tmp/.X11-unix" ]; then
-  sudo chown -R root:root /tmp/.X11-unix
+if [ ! -f "$VNC_PASSWORD_FILE" ]; then
+  echo "$VNC_PASSWORD" | /usr/bin/vncpasswd -f >"$VNC_PASSWORD_FILE"
 fi
 
-sudo rm -rf /tmp/.X1-lock
-sudo pgrep -a Xvfb && killall Xvfb
-sudo pgrep -a x11vnc && killall x11vnc
-sudo pgrep -a chromium-browser && killall chromium-browser
+# xdpyinfo -display "$DISPLAY"
 
 # start up
-export DISPLAY=:1
-
-! pgrep -a Xvfb && Xvfb $DISPLAY -screen 0 "${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x24" &
+! pgrep -a Xvnc && /usr/bin/Xvnc -nolisten local -nolisten unix -listen tcp \
+  -geometry "${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" -depth "$DISPLAY_DEPTH" \
+  -rfbport="$VNC_LISTENING_PORT" -UseIPv6=no -rfbauth="$VNC_PASSWORD_FILE" -SecurityTypes="TLSVnc" \
+  -desktop="$APP_NAME" "$DISPLAY" &
 sleep 3
-
-! pgrep -a x11vnc && x11vnc -geometry "${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" \
-  -passwd "$VNC_PASSWORD" \
-  -autoport "$VNC_LISTENING_PORT" \
-  -bg -forever -nopw -quiet \
-  -display WAIT$DISPLAY &
 
 # https://peter.sh/experiments/chromium-command-line-switches/
 chromium-browser --user-data-dir="/config/chrome" \
