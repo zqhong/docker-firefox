@@ -25,4 +25,9 @@ sleep 3
 chromium-browser --disable-gpu \
   --disable-dev-shm-usage \
   --window-size="${DISPLAY_WIDTH},${DISPLAY_HEIGHT}" \
-  --window-position=0,0
+  --window-position=0,0 \
+  --disable-site-isolation-trials \
+  --process-per-site \
+  --renderer-process-limit=2 \
+  --enable-low-end-device-mode \
+  --single-process
