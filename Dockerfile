@@ -5,13 +5,14 @@ WORKDIR /tmp
 
 # Install the base environment
 RUN \
-    echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories &&  \
-    echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories &&  \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories && \
     apk add tigervnc && \
     apk add ttf-dejavu && \
     apk add xdotool && \
-    apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing &&\
-    apk add unzip
+    apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing && \
+    apk add unzip && \
+    apk add sudo
 
 # Install chromium
 RUN \
