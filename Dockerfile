@@ -13,9 +13,16 @@ RUN \
     apk add sudo && \
     apk add xdotool
 
-# Install chromium.
+# Install chromium
 RUN \
     apk add chromium
+
+# Install other options
+RUN \
+    # Solve garbled characters
+    apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing && \
+    # Used to unpack Chrome crx extension files
+    apk add unzip
 
 # Set environment variables.
 ENV \
@@ -23,6 +30,7 @@ ENV \
     DISPLAY_HEIGHT=1080 \
     VNC_LISTENING_PORT=5900 \
     VNC_PASSWORD=default_password_2cQ1q0YV
+
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
