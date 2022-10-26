@@ -8,6 +8,7 @@ RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories && \
     apk add tigervnc && \
+    apk add openssl && \
     apk add ttf-dejavu && \
     apk add xdotool && \
     apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing && \
@@ -21,7 +22,7 @@ RUN \
 
 # Set environment variables.
 ENV \
-    APP_NAME="Docker Web Browser" \
+    APP_NAME="WebBrowser" \
     DISPLAY_WIDTH=1920 \
     DISPLAY_HEIGHT=1080 \
     DISPLAY_DEPTH=24 \
