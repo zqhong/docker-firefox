@@ -51,7 +51,11 @@ fi
   -desktop="$APP_NAME" \
   -Log="*:stdout:100" \
   "$DISPLAY" &
-sleep 3
+
+# Wait for the Xvnc process to start
+while ! pgrep -a Xvnc; do
+  sleep 0.5
+done
 
 # https://peter.sh/experiments/chromium-command-line-switches/
 chromium-browser --user-data-dir="/config/chrome" \
