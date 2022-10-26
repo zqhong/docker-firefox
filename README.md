@@ -31,12 +31,6 @@ sudo docker run -d \
 * 其他平台：[VncViewer-1.12.0.jar](https://udomain.dl.sourceforge.net/sourceforge/tigervnc/stable/1.12.0/VncViewer-1.12.0.jar)
   * 使用：`java -jar VncViewer.jar`
 
-#### 设置 X.509 证书
-
-1. 保存容器里面 `/config/certs/vnc-fullchain-cert.pem` 的结果，这里假定为宿主机的 `~/certs/vnc-fullchain-cert.pem`
-2. 打开 VNC Viewer 软件，依次点击 `Options / Security / TLS with X.509 certificates / X.509 CA Certificate`
-3. 选择宿主机的 `~/certs/vnc-fullchain-cert.pem`
-
 #### 设置正确的屏幕缩放
 
 1. 打开 VNC Viewer 软件
