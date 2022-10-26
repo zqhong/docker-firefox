@@ -29,7 +29,9 @@ ENV \
     VNC_PASSWORD=default_password_2cQ1q0YV \
     TZ="Asia/Chongqing"
 
-RUN cp /usr/share/zoneinfo/"$TZ" /etc/localtime
+RUN \
+    cp /usr/share/zoneinfo/"$TZ" /etc/localtime && \
+    ntpd -d -q -n -p ntp.aliyun.com
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
