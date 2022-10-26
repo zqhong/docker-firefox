@@ -19,7 +19,7 @@ if [ ! -f "$LOCK_FILE" ]; then
 
   sudo mkdir -pv /config/chrome
   sudo mkdir -pv "$CERT_DIR"
-  sudo chown -R app:app /config
+  sudo chown -R "$USERNAME":"$USERNAME" /config
 
   echo "$VNC_PASSWORD" | /usr/bin/vncpasswd -f >"$VNC_PASSWORD_FILE"
 
