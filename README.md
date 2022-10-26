@@ -18,5 +18,5 @@ sudo docker run -d \
 * 资源限制：50% CPU 占用，512 MB 内存
 * privileged：特权模式
 * 端口映射：host 5900 -> container 5900
-* VNC
-    * 密码：your_password
+* VNC 密码：your_password
+* 客户端：[vncviewer64-1.12.0.exe](https://sourceforge.net/projects/tigervnc/files/stable/1.12.0/)

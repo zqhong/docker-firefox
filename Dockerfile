@@ -12,7 +12,8 @@ RUN \
     apk add xdotool && \
     apk add wqy-zenhei --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing && \
     apk add unzip && \
-    apk add sudo
+    apk add sudo && \
+    apk add tzdata
 
 # Install chromium
 RUN \
@@ -25,8 +26,10 @@ ENV \
     DISPLAY_HEIGHT=1080 \
     DISPLAY_DEPTH=24 \
     VNC_LISTENING_PORT=5900 \
-    VNC_PASSWORD=default_password_2cQ1q0YV
+    VNC_PASSWORD=default_password_2cQ1q0YV \
+    TZ="Asia/Chongqing"
 
+RUN cp /usr/share/zoneinfo/"$TZ" /etc/localtime
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
