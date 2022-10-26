@@ -26,10 +26,10 @@ sudo docker run -d \
 
 #### 下载
 
-* Windows：[vncviewer64-1.12.0.exe](https://udomain.dl.sourceforge.net/sourceforge/tigervnc/stable/1.12.0/vncviewer64-1.12.0.exe)
-* macOS：[TigerVNC-1.12.0.dmg](https://udomain.dl.sourceforge.net/sourceforge/tigervnc/stable/1.12.0/TigerVNC-1.12.0.dmg)
-* 其他平台：[VncViewer-1.12.0.jar](https://udomain.dl.sourceforge.net/sourceforge/tigervnc/stable/1.12.0/VncViewer-1.12.0.jar)
-  * 使用：`java -jar VncViewer.jar`
+* Windows：[vncviewer64-1.12.0.exe](shorturl.at/fpqDZ)
+* macOS：[TigerVNC-1.12.0.dmg](shorturl.at/acyKR)
+* 其他平台：[VncViewer-1.12.0.jar](shorturl.at/swLW9)
+    * 使用：`java -jar VncViewer.jar`
 
 #### 设置正确的屏幕缩放
 
@@ -39,3 +39,13 @@ sudo docker run -d \
 
 > 注意：目前只在开发版的 `VncViewer.jar` 看到有 `Scale` 选项。
 > 地址：https://github.com/TigerVNC/tigervnc/actions/runs/3314362533
+
+### 其他
+
+#### Alpine Linux 设置国内源
+
+```bash
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+```
+
+参考：https://mirrors.tuna.tsinghua.edu.cn/help/alpine/
