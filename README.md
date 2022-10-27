@@ -1,5 +1,7 @@
 # Docker-Web-Broswer
 
+[![Docker Image Size](https://img.shields.io/docker/image-size/hd2300/web-browser/latest)](https://hub.docker.com/r/hd2300/web-browser/tags)
+
 ## 使用
 
 ### 服务端
@@ -26,9 +28,9 @@ sudo docker run -d \
 
 #### 下载
 
-* Windows：[vncviewer64-1.12.0.exe](shorturl.at/fpqDZ)
-* macOS：[TigerVNC-1.12.0.dmg](shorturl.at/acyKR)
-* 其他平台：[VncViewer-1.12.0.jar](shorturl.at/swLW9)
+* Windows：[vncviewer64-1.12.0.exe](https://shorturl.at/fpqDZ)
+* macOS：[TigerVNC-1.12.0.dmg](https://shorturl.at/acyKR)
+* 其他平台：[VncViewer-1.12.0.jar](https://shorturl.at/swLW9)
     * 使用：`java -jar VncViewer.jar`
 
 #### 设置正确的屏幕缩放
@@ -39,6 +41,12 @@ sudo docker run -d \
 
 > 注意：目前只在开发版的 `VncViewer.jar` 看到有 `Scale` 选项。
 > 地址：https://github.com/TigerVNC/tigervnc/actions/runs/3314362533
+
+#### 免密码登录
+
+```bash
+java -jar VncViewer.jar -PasswordFile="/path/to/vnc_password_file" 
+```
 
 ### 其他
 
