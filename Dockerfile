@@ -1,4 +1,4 @@
-FROM alpine:3.16
+FROM frolvlad/alpine-glibc:alpine-3.16_glibc-2.35
 
 # Define working directory.
 WORKDIR /tmp
