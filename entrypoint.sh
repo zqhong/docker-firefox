@@ -37,6 +37,7 @@ if [ ! -f "$LOCK_FILE" ]; then
 fi
 
 # Start up
+# https://tigervnc.org/doc/Xvnc.html
 ! pgrep -a Xvnc && /usr/bin/Xvnc -nolisten local \
   -nolisten unix \
   -listen tcp \

@@ -103,12 +103,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.DOCKER_IMAGE_NAME }}
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: ${{ steps.prep.outputs.is_release == 'yes' }}
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.prep.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             DOCKER_IMAGE_VERSION=${{ steps.prep.outputs.label_version }}
           cache-from: type=gha,scope=${{ env.DOCKER_IMAGE_NAME }}
