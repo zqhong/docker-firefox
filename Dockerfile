@@ -34,8 +34,7 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 5900
 
 RUN \
-    cp /usr/share/zoneinfo/"$TZ" /etc/localtime && \
-    ntpd -d -q -n -p ntp.aliyun.com
+    cp /usr/share/zoneinfo/"$TZ" /etc/localtime
 
 # Creating a non-root user
 RUN adduser -D $USERNAME \

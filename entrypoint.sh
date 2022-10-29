@@ -37,6 +37,8 @@ if [ ! -f "$LOCK_FILE" ]; then
 fi
 
 # Start up
+ntpd -d -q -n -p ntp.aliyun.com
+
 # https://tigervnc.org/doc/Xvnc.html
 ! pgrep -a Xvnc && /usr/bin/Xvnc -nolisten local \
   -nolisten unix \
