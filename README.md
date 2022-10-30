@@ -57,3 +57,28 @@ sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/reposi
 ```
 
 参考：https://mirrors.tuna.tsinghua.edu.cn/help/alpine/
+
+## 附录
+
+### 各版本资源占用对比
+
+```bash
+$ sudo docker stats --no-stream
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O        PIDS
+749d29019f08   web-browser-0.7.0   0.59%     149.7MiB / 512MiB   29.23%    11.4MB / 1.59MB   229kB / 1.8MB    73
+51fecb260fc9   web-browser-0.6.0   0.61%     294.2MiB / 512MiB   57.46%    11.3MB / 1.58MB   293MB / 1.77MB   74   
+```
+
+字段说明：
+
+| Column name | Description |
+| --- | --- |
+| `CONTAINER ID` and `Name` | the ID and name of the container |
+| `CPU %` and `MEM %` | the percentage of the host’s CPU and memory the container is using |
+| `MEM USAGE / LIMIT` | the total memory the container is using, and the total amount of memory it is allowed to use |
+| `NET I/O` | The amount of data the container has sent and received over its network interface |
+| `BLOCK I/O` | The amount of data the container has read to and written from block devices on the host |
+| `PIDs` | the number of processes or threads the container has created |
+
+参考：
+https://docs.docker.com/engine/reference/commandline/stats/
