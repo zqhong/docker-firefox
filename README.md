@@ -92,3 +92,19 @@ https://docs.docker.com/engine/reference/commandline/stats/
 #  -x  Print commands and their arguments as they are executed.
 set -eux
 ```
+
+### sudo、gosu、su-exec
+
+> Avoid installing or using sudo as it has unpredictable TTY and signal-forwarding behavior that can cause problems. 
+> If you absolutely need functionality similar to sudo, such as initializing the daemon as root but running it as non-root, consider using “gosu”.
+
+应避免使用 `sudo`，可以使用 `gosu` 替代。
+
+> After ncopa/su-exec@f85e5bd (`su-exec` 0.2+), `su-exec` now has parity with `gosu` (as verified by `gosu`'s new test suite) such that it's acceptable to use as a `gosu` replacement in our Alpine-based variant for the size consideration.
+
+`su-exec` 0.2+ 版本开始，与 `gosu` 兼容。考虑占用空间大小，使用 `su-exec` 替代 `gosu`。
+
+参考：
+
+* https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+* https://github.com/docker-library/redis/commit/cfa9febb7afdc2af1bb1195c66c50f9bae9ac703
