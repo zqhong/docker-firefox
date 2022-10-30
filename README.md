@@ -1,4 +1,4 @@
-# Docker-Web-Broswer
+# Docker-Web-Browser
 
 [![Docker Image Size](https://img.shields.io/docker/image-size/hd2300/web-browser/latest)](https://hub.docker.com/r/hd2300/web-browser/tags)
 
@@ -82,3 +82,13 @@ CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I
 
 参考：
 https://docs.docker.com/engine/reference/commandline/stats/
+
+
+### set -eux
+
+```bash
+#  -e  Exit immediately if a command exits with a non-zero status.
+#  -u  Treat unset variables as an error when substituting.
+#  -x  Print commands and their arguments as they are executed.
+set -eux
+```

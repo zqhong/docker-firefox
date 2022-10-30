@@ -1,9 +1,9 @@
 #!/bin/sh
 
-set -e # Exit immediately if a command exits with a non-zero status.
-set -u # Treat unset variables as an error.
+set -eux
 
 export DISPLAY=:1
+export USERNAME="chromium"
 
 export LOCK_FILE="/config/.lock"
 export VNC_PASSWORD_FILE="/config/.vncpass"
@@ -15,11 +15,11 @@ export CERT_CERT_FILE="$CERT_DIR/vnc-fullchain-cert.pem"
 # Prepare for action
 if [ ! -f "$LOCK_FILE" ]; then
   # Without initialization
-  sudo rm -rf /config
+  rm -rf /config
 
-  sudo mkdir -pv /config/chrome
-  sudo mkdir -pv "$CERT_DIR"
-  sudo chown -R "$USERNAME":"$USERNAME" /config
+  mkdir -pv /config/chrome
+  mkdir -pv "$CERT_DIR"
+  chown -R "$USERNAME":"$USERNAME" /config
 
   echo "$VNC_PASSWORD" | /usr/bin/vncpasswd -f >"$VNC_PASSWORD_FILE"
 
@@ -40,7 +40,7 @@ fi
 ntpd -d -q -n -p ntp.aliyun.com
 
 # https://tigervnc.org/doc/Xvnc.html
-! pgrep -a Xvnc && /usr/bin/Xvnc -nolisten local \
+! pgrep -a Xvnc && su-exec "$USERNAME" /usr/bin/Xvnc -nolisten local \
   -nolisten unix \
   -listen tcp \
   -geometry "${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" \
@@ -61,7 +61,7 @@ while ! pgrep -a Xvnc; do
 done
 
 # https://peter.sh/experiments/chromium-command-line-switches/
-chromium-browser --user-data-dir="/config/chrome" \
+exec su-exec "$USERNAME" chromium-browser --user-data-dir="/config/chrome" \
   --profile-directory="DefaultUser" \
   --disable-gpu \
   --disable-dev-shm-usage \
