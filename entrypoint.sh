@@ -15,7 +15,7 @@ export CERT_CERT_FILE="$CERT_DIR/vnc-fullchain-cert.pem"
 # Prepare
 if [ ! -f "$LOCK_FILE" ]; then
   # Without initialization
-  rm -rf /config
+  rm -rf /config/*
 
   mkdir -pv /config/chrome
   mkdir -pv "$CERT_DIR"

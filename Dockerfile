@@ -13,7 +13,7 @@ ENV \
     DISPLAY_WIDTH=1920 \
     DISPLAY_HEIGHT=1080 \
     DISPLAY_DEPTH=24 \
-    VNC_LISTENING_PORT=5900 \
+    VNC_LISTENING_PORT=14000 \
     VNC_PASSWORD=default_password_2cQ1q0YV \
     TZ="Asia/Chongqing"
 
