@@ -12,7 +12,7 @@ export CERT_DIR="/config/certs"
 export CERT_KEY_FILE="$CERT_DIR/vnc-private-key.pem"
 export CERT_CERT_FILE="$CERT_DIR/vnc-fullchain-cert.pem"
 
-# Prepare for action
+# Prepare
 if [ ! -f "$LOCK_FILE" ]; then
   # Without initialization
   rm -rf /config
@@ -37,8 +37,6 @@ if [ ! -f "$LOCK_FILE" ]; then
 fi
 
 # Start up
-ntpd -d -q -n -p ntp.aliyun.com
-
 # https://tigervnc.org/doc/Xvnc.html
 ! pgrep -a Xvnc && su-exec "$USERNAME" /usr/bin/Xvnc -nolisten local \
   -nolisten unix \
