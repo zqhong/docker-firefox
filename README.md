@@ -7,21 +7,33 @@
 ### 服务端
 
 ```bash
-sudo docker run -d \
+# debian/ubuntu 宿主机，创建一个仅用于 Docker 容器的用户
+$ sudo useradd --no-create-home --shell /usr/sbin/nologin docker-user
+
+$ sudo mkdir -pv /docker/appdata/web-browser
+$ sudo chown -R docker-user:docker-user /docker/appdata/web-browser
+
+$ id docker-user
+uid=1001(docker-user) gid=1001(docker-user) groups=1001(docker-user) 
+
+$ sudo docker run -d \
     --name=web-browser \
     --privileged \
     --cpus="0.5" \
     --memory="512m" \
-    -p 5900:5900 \
+    -p 14000:14000 \
     -e "VNC_PASSWORD=your_password_7nP40EQf"  \
-    hd2300/web-browser
+    -e "UID=1001" \
+    -e "GID=1001"
+    -v /docker/appdata/web-browser:/config:rw \
+    hd2300/web-browser:v0.8.0
 ```
 
 说明：
 
 * 资源限制：50% CPU 占用，512 MB 内存
 * privileged：特权模式
-* 端口映射：host 5900 -> container 5900
+* 端口映射：宿主机 14000 端口 -> Docker 容器 14000 端口
 * VNC 密码：`your_password_7nP40EQf`
 
 ### 客户端
@@ -64,9 +76,10 @@ sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/reposi
 
 ```bash
 $ sudo docker stats --no-stream
-CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O        PIDS
-749d29019f08   web-browser-0.7.0   0.59%     149.7MiB / 512MiB   29.23%    11.4MB / 1.59MB   229kB / 1.8MB    73
-51fecb260fc9   web-browser-0.6.0   0.61%     294.2MiB / 512MiB   57.46%    11.3MB / 1.58MB   293MB / 1.77MB   74   
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O         PIDS
+70c7aa0bec68   web-browser-0.8.0   0.59%     151.4MiB / 512MiB   29.56%    16.6MB / 2.11MB   13.4MB / 1.86MB   71
+749d29019f08   web-browser-0.7.0   0.59%     152.1MiB / 512MiB   29.72%    19.8MB / 3.84MB   13.2MB / 2.14MB   72
+51fecb260fc9   web-browser-0.6.0   0.60%     298.1MiB / 512MiB   58.21%    19.8MB / 3.76MB   306MB / 2.18MB    73    
 ```
 
 字段说明：
@@ -83,7 +96,6 @@ CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I
 参考：
 https://docs.docker.com/engine/reference/commandline/stats/
 
-
 ### set -eux
 
 ```bash
@@ -95,12 +107,15 @@ set -eux
 
 ### sudo、gosu、su-exec
 
-> Avoid installing or using sudo as it has unpredictable TTY and signal-forwarding behavior that can cause problems. 
-> If you absolutely need functionality similar to sudo, such as initializing the daemon as root but running it as non-root, consider using “gosu”.
+> Avoid installing or using sudo as it has unpredictable TTY and signal-forwarding behavior that can cause problems.
+> If you absolutely need functionality similar to sudo, such as initializing the daemon as root but running it as
+> non-root, consider using “gosu”.
 
 应避免使用 `sudo`，可以使用 `gosu` 替代。
 
-> After ncopa/su-exec@f85e5bd (`su-exec` 0.2+), `su-exec` now has parity with `gosu` (as verified by `gosu`'s new test suite) such that it's acceptable to use as a `gosu` replacement in our Alpine-based variant for the size consideration.
+> After ncopa/su-exec@f85e5bd (`su-exec` 0.2+), `su-exec` now has parity with `gosu` (as verified by `gosu`'s new test
+> suite) such that it's acceptable to use as a `gosu` replacement in our Alpine-based variant for the size
+> consideration.
 
 `su-exec` 0.2+ 版本开始，与 `gosu` 兼容。考虑占用空间大小，使用 `su-exec` 替代 `gosu`。
 

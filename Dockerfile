@@ -1,14 +1,8 @@
 FROM frolvlad/alpine-glibc:alpine-3.16_glibc-2.35
 
-# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-# alpine already has a gid 999, so we'll use the next id
-RUN addgroup -S -g 1000 chromium && adduser -S -G chromium -u 999 chromium
-
-WORKDIR /tmp
-
-COPY entrypoint.sh /
-
 ENV \
+    UID=1001 \
+    GID=1001 \
     APP_NAME="WebBrowser" \
     DISPLAY_WIDTH=1920 \
     DISPLAY_HEIGHT=1080 \
@@ -16,6 +10,14 @@ ENV \
     VNC_LISTENING_PORT=14000 \
     VNC_PASSWORD=default_password_2cQ1q0YV \
     TZ="Asia/Chongqing"
+
+# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
+# alpine already has a gid 999, so we'll use the next id
+RUN addgroup -S -g "$GID" chromium && adduser -S -G chromium -u "$UID" chromium
+
+WORKDIR /tmp
+
+COPY entrypoint.sh /
 
 # 安装包按 A-Z 顺序排序
 # Aa、Bb、Cc、Dd、Ee、Ff、Gg、Hh、Ii、Jj、Kk、
