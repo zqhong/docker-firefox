@@ -11,6 +11,7 @@
 $ sudo groupadd -g 3000 docker-user
 $ sudo useradd -u 3000 -g 3000 --no-create-home --shell /usr/sbin/nologin docker-user
 
+$ sudo rm -rf /docker/appdata/web-browser
 $ sudo mkdir -pv /docker/appdata/web-browser
 $ sudo chown -R docker-user:docker-user /docker/appdata/web-browser
 
