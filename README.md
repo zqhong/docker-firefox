@@ -18,7 +18,7 @@ $ id docker-user
 uid=3000(docker-user) gid=3000(docker-user) groups=3000(docker-user) 
 
 $ sudo docker run -d \
-    --name=web-browser-v0.8.1 \
+    --name=web-browser-v0.8.2 \
     --privileged \
     --cpus="0.5" \
     --memory="512m" \
@@ -27,7 +27,7 @@ $ sudo docker run -d \
     -e "UID=3000" \
     -e "GID=3000" \
     -v /docker/appdata/web-browser:/config:rw \
-    hd2300/web-browser:v0.8.1
+    hd2300/web-browser:v0.8.2
 ```
 
 说明：
