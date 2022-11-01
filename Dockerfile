@@ -11,10 +11,6 @@ ENV \
     VNC_PASSWORD=default_password_2cQ1q0YV \
     TZ="Asia/Chongqing"
 
-# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-# alpine already has a gid 999, so we'll use the next id
-RUN addgroup -S -g "$GID" chromium && adduser -S -G chromium -u "$UID" chromium
-
 WORKDIR /tmp
 
 COPY entrypoint.sh /

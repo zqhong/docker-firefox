@@ -8,25 +8,26 @@
 
 ```bash
 # debian/ubuntu 宿主机，创建一个仅用于 Docker 容器的用户
-$ sudo useradd --no-create-home --shell /usr/sbin/nologin docker-user
+$ sudo groupadd -g 3000 docker-user
+$ sudo useradd -u 3000 -g 3000 --no-create-home --shell /usr/sbin/nologin docker-user
 
 $ sudo mkdir -pv /docker/appdata/web-browser
 $ sudo chown -R docker-user:docker-user /docker/appdata/web-browser
 
 $ id docker-user
-uid=1001(docker-user) gid=1001(docker-user) groups=1001(docker-user) 
+uid=3000(docker-user) gid=3000(docker-user) groups=3000(docker-user) 
 
 $ sudo docker run -d \
-    --name=web-browser \
+    --name=web-browser-v0.8.1 \
     --privileged \
     --cpus="0.5" \
     --memory="512m" \
     -p 14000:14000 \
     -e "VNC_PASSWORD=your_password_7nP40EQf"  \
-    -e "UID=1001" \
-    -e "GID=1001"
+    -e "UID=3000" \
+    -e "GID=3000" \
     -v /docker/appdata/web-browser:/config:rw \
-    hd2300/web-browser:v0.8.0
+    hd2300/web-browser:v0.8.1
 ```
 
 说明：

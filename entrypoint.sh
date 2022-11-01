@@ -3,7 +3,7 @@
 set -eux
 
 export DISPLAY=:1
-export USERNAME="chromium"
+export USERNAME="docker-user"
 
 export LOCK_FILE="/config/.lock"
 export VNC_PASSWORD_FILE="/config/.vncpass"
@@ -19,9 +19,12 @@ if [ ! -f "$LOCK_FILE" ]; then
 
   mkdir -pv /config/chrome
   mkdir -pv "$CERT_DIR"
-  chown -R "$USERNAME":"$USERNAME" /config
 
   echo "$VNC_PASSWORD" | /usr/bin/vncpasswd -f >"$VNC_PASSWORD_FILE"
+
+  deluser "$USERNAME"
+  addgroup -S -g "$GID" "$USERNAME"
+  adduser -S -G "$USERNAME" -u "$UID" "$USERNAME"
 
   env HOME=/tmp openssl req \
     -x509 \
@@ -32,6 +35,7 @@ if [ ! -f "$LOCK_FILE" ]; then
     -keyout "$CERT_KEY_FILE" \
     -out "$CERT_CERT_FILE"
   chmod 400 "$CERT_KEY_FILE"
+  chown -R "$USERNAME":"$USERNAME" /config
 
   touch "$LOCK_FILE"
 fi
