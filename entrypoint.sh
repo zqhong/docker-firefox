@@ -22,7 +22,10 @@ if [ ! -f "$LOCK_FILE" ]; then
 
   echo "$VNC_PASSWORD" | /usr/bin/vncpasswd -f >"$VNC_PASSWORD_FILE"
 
-  deluser "$USERNAME"
+  if [ "$(id "$USERNAME" | wc -l)" = 1 ]; then
+    deluser "$USERNAME"
+  fi
+
   addgroup -S -g "$GID" "$USERNAME"
   adduser -S -G "$USERNAME" -u "$UID" "$USERNAME"
 
